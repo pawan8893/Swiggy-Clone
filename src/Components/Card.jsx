@@ -14,7 +14,7 @@ const Card = ({ name, image, area, description }) => {
   };
 
   return (
-    <div className="w-[270px] flex-none mt-4 mx-auto">
+    <div className="w-[270px] flex-none mt-4 mx-auto transition-transform duration-300 hover:scale-95 rounded-lg">
       {/* Image Section */}
       <div className="h-[180px] rounded-[15px] overflow-hidden relative">
         <img className="w-full h-full object-cover" src={image} alt={name} />

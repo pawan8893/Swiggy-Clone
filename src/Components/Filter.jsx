@@ -31,7 +31,7 @@ const Filter = ({ onFilterChange, onSortChange }) => {
   return (
     <div className="mx-4 sm:mx-6 md:mx-20">
       <h1 className="font-bold text-xl sm:text-2xl mt-6 mb-3">
-        Restaurants with online food delivery in Pune
+        Restaurants with online food delivery in India
       </h1>
       <div className="flex flex-wrap gap-2 relative">
         {/* Filter Button */}
