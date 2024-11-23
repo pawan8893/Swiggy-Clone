@@ -1,34 +1,49 @@
 import React, { useEffect } from "react";
 
-const MyModal = ({ handleClose }) => {
-
-  // Disables the scroll behaviour in background when Modal pops up
-  useEffect(()=>{
-    document.body.style.overflowY="hidden";
-    return()=>{
-      document.body.style.overflowY="scroll";
+const MyModal = ({ handleClose, meal }) => {
+  // Disable background scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "scroll";
     };
-  },[])
+  }, []);
 
   return (
     <>
       {/* Background Overlay */}
-      <div
-        className="fixed inset-0 bg-black opacity-30 backdrop-blur-sm flex justify-center items-center">
-      </div>
+      <div className="fixed inset-0 bg-black opacity-30 backdrop-blur-sm flex justify-center items-center"></div>
 
       {/* Modal Box */}
-      <div 
-        className="fixed inset-0 flex justify-center items-center z-50">
-        <div className="w-1/3 bg-white text-black border rounded-xl px-20 py-10 shadow-lg flex flex-col items-center gap-5 mx-auto">
-          <h2 className="text-3xl font-extrabold text-black">Description</h2>
-          <p className="text-2xl font-bold max-w-md text-center">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-            laboriosam.
+      <div className="fixed inset-0 flex justify-center items-center z-50">
+        <div className="w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3 bg-white text-black border rounded-xl px-5 sm:px-10 py-5 shadow-lg flex flex-col gap-5 mx-auto">
+          {/* Meal Title */}
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-black text-center">
+            {meal?.strMeal || "No Title"}
+          </h2>
+
+          {/* Meal Image */}
+          <img
+            src={meal?.strMealThumb}
+            alt={meal?.strMeal}
+            className="w-[200px] sm:w-[250px] md:w-[300px] mx-auto rounded-lg mb-3"
+          />
+
+          {/* Meal Category and Area */}
+          <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 text-center">
+            <span className="block sm:inline">
+              <strong>Category:</strong> {meal?.strCategory || "N/A"}
+            </span>{" "}
+            |{" "}
+            <span className="block sm:inline">
+              <strong>Origin:</strong> {meal?.strArea || "Unknown"}
+            </span>
           </p>
+
+          {/* Exit Button */}
           <button
             onClick={handleClose}
-            className="mt-4 text-xl w-full px-5 py-2 bg-orange-500 text-center text-white font-medium rounded-md"
+            className="mt-4 text-sm sm:text-base md:text-lg w-full px-3 py-2 sm:px-5 sm:py-3 bg-[#ff5200] text-center text-white font-medium rounded-md transition duration-200 hover:bg-[#e04a00]"
           >
             Exit
           </button>

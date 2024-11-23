@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { LuSettings2 } from "react-icons/lu";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -10,7 +10,9 @@ const Filter = ({ onFilterChange, onSortChange }) => {
   // Fetch areas for "Filter by Area"
   const fetchAreas = async () => {
     try {
-      const response = await fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list");
+      const response = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+      );
       const data = await response.json();
       setAreas(data.meals || []);
     } catch (error) {
@@ -23,10 +25,34 @@ const Filter = ({ onFilterChange, onSortChange }) => {
     fetchAreas();
   }, []);
 
+ 
   const applyAreaFilter = () => {
     onFilterChange(selectedArea); // Notify parent about the selected area
     setShowFilterDropdown(false); // Close dropdown
   };
+
+
+
+  const btns = [
+    {
+      value: "Fast Delievery",
+    },
+    {
+      value: "Rating 4.0+",
+    },
+    {
+      value: "Pure Veg",
+    },
+    {
+      value: "Offers",
+    },
+    {
+      value: "Rs. 300 - Rs. 600",
+    },
+    {
+      value: "Less than Rs. 300",
+    },
+  ];
 
   return (
     <div className="mx-4 sm:mx-6 md:mx-20">
@@ -54,13 +80,14 @@ const Filter = ({ onFilterChange, onSortChange }) => {
                     name="area"
                     value={area.strArea}
                     onChange={() => setSelectedArea(area.strArea)}
+                    className="w-5 h-5 text-orange-500 accent-[#ff5200]"
                   />
                   {area.strArea}
                 </label>
               ))}
             </div>
             <button
-              className="mt-4 w-full bg-blue-500 text-white py-1 px-3 rounded-lg"
+              className="mt-4 w-full bg-[#ff5200] text-white py-1 px-3 rounded-lg"
               onClick={applyAreaFilter}
             >
               Apply
@@ -71,54 +98,23 @@ const Filter = ({ onFilterChange, onSortChange }) => {
         {/* Sort By Button */}
         <button
           className="flex gap-2 text-sm text-gray-600 font-medium items-center w-auto border py-1 px-3 rounded-full"
-          onClick={onSortChange} // Toggle sorting
         >
           Sort By <MdKeyboardArrowDown />
         </button>
 
-        {/* Other Filter Buttons */}
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("fastDelivery")}
-        >
-          Fast Delivery
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("newOnSwiggy")}
-        >
-          New on Swiggy
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("rating")}
-        >
-          Rating 4.0+
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("pureVeg")}
-        >
-          Pure Veg
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("offers")}
-        >
-          Offers
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("priceHigh")}
-        >
-          Rs. 300 - Rs. 600
-        </button>
-        <button
-          className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
-          onClick={() => onFilterChange("priceLow")}
-        >
-          Less than Rs. 300
-        </button>
+
+        {/* Other Utility Buttons */}
+
+        {btns.map((btn, index) => {
+          return (
+            <button
+              className="text-sm text-gray-600 font-medium w-auto border py-1 px-3 rounded-full"
+              key={index}
+            >
+              {btn.value}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

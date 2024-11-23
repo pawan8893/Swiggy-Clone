@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import MyModal from "./MyModal";
 
 const MainContent = ({ filter, handleOpen }) => {
   const [meals, setMeals] = useState([]); // Store meals to display
   const [error, setError] = useState(null); // Handle errors
   const [loading, setLoading] = useState(true); // Show loading state
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [selectedMeal, setSelectedMeal] = useState(null); // Selected card data
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const itemsPerPage = 12; // Number of meals per page
 
   // Function to fetch meals based on the region
@@ -48,19 +51,49 @@ const MainContent = ({ filter, handleOpen }) => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
+  // Handle opening the modal with selected card data
+  const handleCardClick = async(cardkey) => {
+    try {
+      console.log("cardKey",cardkey)
+      const response = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${cardkey}`
+      );
+      const data = await response.json();
+      console.log("data in card click",data)
+      setSelectedMeal(data.meals[0] || []); // Save fetched meals
+      console.log("selected meal",selectedMeal)
+    } catch (error) {
+      setError("Error fetching selected meals data.");
+    } finally {
+      setLoading(false);
+    }
+    // console.log("meal in card click",)
+    // setSelectedMeal(meal);
+    setIsModalOpen(true);
+  };
+
+  // Handle closing the modal
+  const handleModalClose = () => {
+    setSelectedMeal(null);
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       {!loading && !error && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
             {currentMeals.map((item, ind) => (
-              <Card
-                handleOpen={handleOpen}
-                key={ind}
-                name={item.strMeal} // Display meal name
-                image={item.strMealThumb} // Display meal image
-                description={`Explore the taste of ${item.strMeal}`} // Example description
-              />
+             <Card
+             handleOpen={handleOpen}
+             key={item.idMeal} // Set as React's internal key
+             cardKey={item.idMeal} // Pass explicitly as a prop
+             name={item.strMeal} // Display meal name
+             image={item.strMealThumb} // Display meal image
+             description={`Explore the taste of ${item.strMeal}`} // Example description
+             onClick={() => handleCardClick(item.idMeal)} // Pass clicked meal data
+           />
+           
             ))}
           </div>
 
@@ -72,7 +105,7 @@ const MainContent = ({ filter, handleOpen }) => {
               className={`px-4 py-2 rounded-lg ${
                 currentPage === 1
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-orange-500 text-white"
+                  : "bg-[#ff5200] text-white"
               }`}
             >
               Previous
@@ -84,7 +117,7 @@ const MainContent = ({ filter, handleOpen }) => {
               className={`px-4 py-2 rounded-lg ${
                 currentPage === totalPages
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-orange-500 text-white"
+                  : "bg-[#ff5200] text-white"
               }`}
             >
               Next
@@ -95,9 +128,16 @@ const MainContent = ({ filter, handleOpen }) => {
 
       {loading && <p className="text-center">Loading...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
+
+      {/* Render Modal */}
+      {isModalOpen && (
+        <MyModal
+          handleClose={handleModalClose}
+          meal={selectedMeal} // Pass selected meal data to modal
+        />
+      )}
     </div>
   );
 };
 
 export default MainContent;
-
