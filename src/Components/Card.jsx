@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MdStars } from "react-icons/md";
 
-const Card = ({ name, image, area, description }) => {
-  // Hardcoded lorem ipsum text
-  const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+const Card = ({ name, image, area, description, handleOpen }) => {
 
   // Limit description to 20 words
   const truncateDescription = (text, wordLimit) => {
@@ -13,13 +11,17 @@ const Card = ({ name, image, area, description }) => {
       : text;
   };
 
+
   return (
-    <div className="w-[270px] flex-none mt-4 mx-auto transition-transform duration-300 hover:scale-95 rounded-lg">
+    <div
+        onClick={handleOpen} 
+        className="w-[270px] flex-none mt-4 mx-auto transition-transform duration-300 hover:scale-95 rounded-lg hover:cursor-pointer">
       {/* Image Section */}
-      <div className="h-[180px] rounded-[15px] overflow-hidden relative">
+      <div
+        className="h-[180px] rounded-[15px] overflow-hidden relative">
         <img className="w-full h-full object-cover" src={image} alt={name} />
         <div className="absolute w-full h-full top-0 flex items-end p-2 text-white text-[20px] font-bold bg-gradient-to-t from-black to-transparent">
-          Items at ₹199
+          Items at ₹199 
         </div>
       </div>
 
@@ -37,6 +39,7 @@ const Card = ({ name, image, area, description }) => {
         {truncateDescription(description, 20)}
       </p>
       <p className="text-gray-400 text-xs mt-1">Location: {area || "Unknown"}</p>
+
     </div>
   );
 };
