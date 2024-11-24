@@ -1,15 +1,17 @@
 ## 🌟 Swiggy Food Delivery Application Clone
 - A simple Food Delivery Application built with React.js that displays meals from an API, with features like filtering, sorting, pagination, and a detailed meal modal.
 
-* 📋 Table of Contents
+# 📋 Table of Contents
 + 🔥 Features
 + 📂 Project Structure
 + ⚙️ Setup
 + 🛠️ Usage
 + 🧩 Components
 + 🌐 API Used
-+ 🚀 Future Enhancements
-+ 🔥 Features
+
+
+  
+# 🔥 Features
 + ✔️ Displays a list of meals fetched from TheMealDB API.
 + ✔️ Filters meals by region or area.
 + ✔️ Sorts meals alphabetically (ascending or descending).
@@ -19,7 +21,7 @@
 
 
 
-* 📂 Project Structure
+# 📂 Project Structure
 ```bash
 src/
 ├── Components/
@@ -36,11 +38,11 @@ src/
 ```
 
 
-* ⚙️ Setup
-* 🛑 Prerequisites
+# ⚙️ Setup
+# 🛑 Prerequisites
 - Install Node.js
 - Use a package manager: npm or yarn
-* 🖥️ Installation
+# 🖥️ Installation
 1. Clone the repository:
 
 ```bash
@@ -57,13 +59,13 @@ $ npm start
 ```
 
 
-* 🛠️ Usage
+# 🛠️ Usage
 + 🧭 Filter by Area: Click the "Filter" button to select an area.
 + 🔄 Sort by Name: Use the "Sort By" button to toggle alphabetical sorting.
 + 🔍 View Details: Click on any meal card to view its details in a modal.
 + 📖 Pagination: Use "Previous" and "Next" buttons to navigate through meals.
 
-* 🧩 Components
+# 🧩 Components
  1️⃣ Header
 - 🟢 Displays the application logo at the top.
 
@@ -87,7 +89,7 @@ $ npm start
 6️⃣ MainContent
 - 🟠 Fetches and displays meals with pagination, filtering, and sorting functionalities.
 
-* 🌐 API Used
+# 🌐 API Used
 - This application uses TheMealDB API:
 
 + List of areas: https://www.themealdb.com/api/json/v1/1/list.php?a=list
@@ -95,13 +97,8 @@ $ npm start
 + Get meal details: https://www.themealdb.com/api/json/v1/1/lookup.php?i={mealId}
 
 
-* 🚀 Future Enhancements
-+ 🔹 Add a search bar for direct meal lookup.
-+ 🔹 Implement user authentication and personalized favorites.
-+ 🔹 Include a cart and checkout system.
-+ 🔹 Improve UI with animations and advanced styling.
 
-* 🤝 Contributing
+# 🤝 Contributing
 1. Fork the repository.
 2. Create a new branch: git checkout -b feature/your-feature.
 3. Commit changes: git commit -m 'Add feature'.
@@ -109,10 +106,10 @@ $ npm start
 5. Open a pull request.
 
 
-* 📜 License
+# 📜 License
 - This project is licensed under the MIT License.
 
-* ❤️ Acknowledgments
+# ❤️ Acknowledgments
 - Special thanks to TheMealDB for their free API service.
 
 - Happy coding! ✨
