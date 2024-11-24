@@ -1,4 +1,4 @@
-## 🌟 React Food Delivery Application
+## 🌟 Swiggy Food Delivery Application Clone
 - A simple Food Delivery Application built with React.js that displays meals from an API, with features like filtering, sorting, pagination, and a detailed meal modal.
 
 * 📋 Table of Contents
@@ -20,8 +20,7 @@
 
 
 * 📂 Project Structure
-
-`bash
+```bash
 src/
 ├── Components/
 │   ├── Header.jsx       # Header section of the application
@@ -34,6 +33,7 @@ src/
 ├── App.css              # Global styles
 ├── index.js             # Entry point of the application
 
+```
 
 
 * ⚙️ Setup
@@ -48,14 +48,13 @@ $ git clone https://github.com/your-username/react-food-delivery.git
 $ cd react-food-delivery 
 
 2. Install dependencies:
-```bash
 $ npm install
 
 3. Start the development server:
-```bash
 $ npm start  
 
 4. Open the app in your browser: http://localhost:3000
+```
 
 
 * 🛠️ Usage
