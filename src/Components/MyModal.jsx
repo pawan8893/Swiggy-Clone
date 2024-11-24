@@ -1,7 +1,15 @@
 import React, { useEffect } from "react";
 
+/**
+ * MyModal Component
+ * Displays a modal with meal details such as title, image, category, and origin.
+ * 
+ * Props:
+ * - handleClose: Function to close the modal.
+ * - meal: Object containing meal details like title, image, category, and area.
+ */
 const MyModal = ({ handleClose, meal }) => {
-  // Disable background scroll when modal is open
+  // Effect to disable background scroll when the modal is open
   useEffect(() => {
     document.body.style.overflowY = "hidden";
     return () => {

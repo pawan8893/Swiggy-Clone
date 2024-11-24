@@ -2,26 +2,38 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import MyModal from "./MyModal";
 
-const MainContent = ({ filter, handleOpen }) => {
-  const [meals, setMeals] = useState([]); // Store meals to display
-  const [error, setError] = useState(null); // Handle errors
-  const [loading, setLoading] = useState(true); // Show loading state
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
-  const [selectedMeal, setSelectedMeal] = useState(null); // Selected card data
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
-  const itemsPerPage = 12; // Number of meals per page
+/**
+ * MainContent Component
+ * Displays a grid of meal cards, handles filtering, sorting, pagination, 
+ * and shows modal for detailed meal information.
+ * 
+ * Props:
+ * - filter: Selected filter area (e.g., "Indian").
+ * - handleOpen: Function to handle additional actions on modal open.
+ * - sortTrigger: Boolean to toggle between ascending and descending sorting.
+ */
+
+
+const MainContent = ({ filter, handleOpen, sortTrigger }) => {
+  const [meals, setMeals] = useState([]); 
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const itemsPerPage = 12; 
 
   // Function to fetch meals based on the region
   const fetchMealsByArea = async (areaFilter) => {
     setLoading(true);
-    setError(null); // Reset error state
+    setError(null);
 
     try {
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/filter.php?a=${areaFilter}`
       );
       const data = await response.json();
-      setMeals(data.meals || []); // Save fetched meals
+      setMeals(data.meals || []); 
     } catch (error) {
       setError("Error fetching meals.");
     } finally {
@@ -31,9 +43,22 @@ const MainContent = ({ filter, handleOpen }) => {
 
   // UseEffect to fetch meals when filter changes
   useEffect(() => {
-    const defaultArea = "Indian"; // Default area to show meals
-    fetchMealsByArea(filter || defaultArea); // Fetch meals based on filter or default to Indian
+    const defaultArea = "Indian"; 
+    fetchMealsByArea(filter || defaultArea); 
   }, [filter]);
+
+  // Sort meals based on the sortTrigger state
+  useEffect(() => {
+    if (sortTrigger) {
+      setMeals((prevMeals) =>
+        prevMeals.slice().sort((a, b) => b.strMeal.localeCompare(a.strMeal)) // Descending
+      );
+    } else {
+      setMeals((prevMeals) =>
+        prevMeals.slice().sort((a, b) => a.strMeal.localeCompare(b.strMeal)) // Ascending
+      );
+    }
+  }, [sortTrigger]);
 
   // Calculate the current meals to display
   const indexOfLastMeal = currentPage * itemsPerPage;
@@ -52,23 +77,18 @@ const MainContent = ({ filter, handleOpen }) => {
   };
 
   // Handle opening the modal with selected card data
-  const handleCardClick = async(cardkey) => {
+  const handleCardClick = async (cardkey) => {
     try {
-      console.log("cardKey",cardkey)
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${cardkey}`
       );
       const data = await response.json();
-      console.log("data in card click",data)
-      setSelectedMeal(data.meals[0] || []); // Save fetched meals
-      console.log("selected meal",selectedMeal)
+      setSelectedMeal(data.meals[0] || []); 
     } catch (error) {
       setError("Error fetching selected meals data.");
     } finally {
       setLoading(false);
     }
-    // console.log("meal in card click",)
-    // setSelectedMeal(meal);
     setIsModalOpen(true);
   };
 
@@ -84,16 +104,15 @@ const MainContent = ({ filter, handleOpen }) => {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
             {currentMeals.map((item, ind) => (
-             <Card
-             handleOpen={handleOpen}
-             key={item.idMeal} // Set as React's internal key
-             cardKey={item.idMeal} // Pass explicitly as a prop
-             name={item.strMeal} // Display meal name
-             image={item.strMealThumb} // Display meal image
-             description={`Explore the taste of ${item.strMeal}`} // Example description
-             onClick={() => handleCardClick(item.idMeal)} // Pass clicked meal data
-           />
-           
+              <Card
+                handleOpen={handleOpen}
+                key={item.idMeal}
+                cardKey={item.idMeal}
+                name={item.strMeal}
+                image={item.strMealThumb}
+                description={`Explore the taste of ${item.strMeal}`}
+                onClick={() => handleCardClick(item.idMeal)}
+              />
             ))}
           </div>
 
@@ -131,10 +150,7 @@ const MainContent = ({ filter, handleOpen }) => {
 
       {/* Render Modal */}
       {isModalOpen && (
-        <MyModal
-          handleClose={handleModalClose}
-          meal={selectedMeal} // Pass selected meal data to modal
-        />
+        <MyModal handleClose={handleModalClose} meal={selectedMeal} />
       )}
     </div>
   );
