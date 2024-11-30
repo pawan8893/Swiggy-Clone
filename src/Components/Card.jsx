@@ -13,12 +13,8 @@ import { MdStars } from "react-icons/md";
  * - onClick: Click event handler for the card.
  */
 const Card = ({ cardKey, name, image, description, onClick }) => {
-  /**
-   * Function to truncate a description text to a specified word limit.
-   *
-   * @param {string} text 
-   * @param {number} wordLimit 
-   * @returns {string} 
+  /*
+   * Function to truncate a description text to a specified word limit. 
    */
   const truncateDescription = (text, wordLimit) => {
     const words = text.split(" ");
